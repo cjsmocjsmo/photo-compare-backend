@@ -7,6 +7,7 @@ pub mod functions;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let _vars = envvars::set_env_vars();
     let img_path = env::var("COMPARE_IMAGE_PATH").unwrap();
     let json_path = env::var("COMPARE_JSON_PATH").unwrap();
 
