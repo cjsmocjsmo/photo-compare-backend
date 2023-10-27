@@ -13,7 +13,7 @@ pub fn set_env_vars() {
     };
     let compare_nfo = env::var("COMPARE_JSON_PATH");
     if compare_nfo.is_err() {
-        env::set_var("COMPARE_JSON", "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/ToRemove");
+        env::set_var("COMPARE_JSON_PATH", "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/ToRemove");
     };
     let compare_raw_http = env::var("COMPARE_RAW_HTTP");
     if compare_raw_http.is_err() {
