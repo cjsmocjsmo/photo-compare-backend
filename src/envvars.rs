@@ -17,11 +17,11 @@ pub fn set_env_vars() {
     };
     let compare_raw_http = env::var("COMPARE_RAW_HTTP");
     if compare_raw_http.is_err() {
-        env::set_var("COMPARE_RAW_HTTP", "192.168.0.26");
+        env::set_var("COMPARE_RAW_HTTP", "192.168.0.91");
     };
     let compare_http = env::var("COMPARE_HTTP_ADDR");
     if compare_http.is_err() {
-        env::set_var("COMPARE_HTTP_ADDR", "http://192.168.0.26");
+        env::set_var("COMPARE_HTTP_ADDR", "http://192.168.0.91");
     };
     let compare_port = env::var("COMPARE_PORT");
     if compare_port.is_err() {
