@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            // .service(crate::functions::hello)
+            .service(functions::test)
             // .service(crate::functions::echo)
 
 
