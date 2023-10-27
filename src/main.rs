@@ -2,6 +2,7 @@ use actix_files as fs;
 use actix_web::{App, HttpServer};
 use std::env;
 
+pub mod envvars;
 pub mod functions;
 
 #[actix_web::main]
