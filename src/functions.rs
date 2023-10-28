@@ -42,7 +42,7 @@ pub async fn jsonblob() -> impl Responder {
             let file = std::fs::read_to_string(file_path).unwrap();
             let img_hash_struct: DupsStruct = serde_json::from_str(&file).unwrap();
             files.push(img_hash_struct);
-            if files.len() == 100 {
+            if files.len() == 25 {
                 break;
             }
         }
