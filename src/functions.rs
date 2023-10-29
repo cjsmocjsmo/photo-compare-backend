@@ -76,7 +76,7 @@ pub async fn jsonblob() -> impl Responder {
 fn get_25_files() -> Vec<TransDupsEntry> {
     let json_path = env::var("COMPARE_JSON_PATH").unwrap();
     let pagination = env::var("COMPARE_PAGINATION").unwrap();
-
+let int_pagination =  pagination.parse::<usize>().unwrap();
     let mut files = Vec::new();
 
     for entry in WalkDir::new(json_path) {
@@ -85,9 +85,9 @@ fn get_25_files() -> Vec<TransDupsEntry> {
             let file_path = entry.path().to_str().unwrap().to_owned();
             // read the json file file_path and parse it into a ImgHashStruct
             let file = std::fs::read_to_string(file_path).unwrap();
-            let img_hash_struct: TransDupsEntry = serde_json::from_str(&file).unwrap();
+            let img_hash_struct = serde_json::from_str(&file).unwrap();
             files.push(img_hash_struct);
-            let int_pagination =  pagination.parse::<usize>().unwrap();
+
             if files.len() == int_pagination {
                 break;
             }
