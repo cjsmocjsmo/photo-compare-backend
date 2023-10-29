@@ -23,9 +23,11 @@ pub async fn test() -> impl Responder {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct DupsStruct {
+pub struct TransDupsEntry {
     pub filename: String,
+    pub httpfilename: String,
     pub duplicates: Vec<String>,
+    pub httpduplicates: Vec<String>,
 }
 
 #[get("/jsonblob")]
@@ -40,7 +42,7 @@ pub async fn jsonblob() -> impl Responder {
             let file_path = entry.path().to_str().unwrap().to_owned();
             // read the json file file_path and parse it into a ImgHashStruct
             let file = std::fs::read_to_string(file_path).unwrap();
-            let img_hash_struct: DupsStruct = serde_json::from_str(&file).unwrap();
+            let img_hash_struct: TransDupsEntry = serde_json::from_str(&file).unwrap();
             files.push(img_hash_struct);
             if files.len() == 25 {
                 break;
