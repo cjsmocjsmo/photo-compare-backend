@@ -62,7 +62,7 @@ fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
     for file in dupslist {
         let mut fragment = Vec::new();
         // let filename = file.clone().httpfilename;
-        let frag1 = format!("<div class='container'><h1>Original</h1>");
+        let frag1 = format!("<h1>Original</h1>");
         fragment.push(frag1);
         let frag2 = format!("<section class='containerImg'>");
         fragment.push(frag2);
@@ -87,7 +87,7 @@ fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
         }
         let frag7 = format!("</section><div class='completeBtn'>");
         fragment.push(frag7);
-        let frag8 = format!("<button>Complete</button></div></div>");
+        let frag8 = format!("<button>Complete</button></div>");
         fragment.push(frag8);
         let html = fragment.join("");
         println!("html {:#?}", html.clone());
