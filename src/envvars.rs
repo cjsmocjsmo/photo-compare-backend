@@ -3,7 +3,7 @@ use std::env;
 pub fn set_env_vars() {
     let compare_pagination = env::var("COMPARE_PAGINATION");
     if compare_pagination.is_err() {
-        env::set_var("COMPARE_PAGINATION", "25");
+        env::set_var("COMPARE_PAGINATION", "5");
     };
     let compare_image_path = env::var("COMPARE_IMAGE_PATH");
     if compare_image_path.is_err() {

@@ -49,7 +49,7 @@ pub async fn jsonblob() -> impl Responder {
 }
 
 // fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
-
+// let newdupslist = Vec::new();
 //     for file in dupslist {
 //         let mut fragment = Vec::new();
 //         let filename = file.clone().httpfilename;
@@ -67,6 +67,7 @@ pub async fn jsonblob() -> impl Responder {
 //             let frag6 = format!("<div class='dupCardText'><p>{}</p></div></div>", dup.clone().strdups);
 //             fragment.push(frag6);
 //         }
+
 
 //     }
 
