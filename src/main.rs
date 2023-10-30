@@ -24,6 +24,7 @@ async fn main() -> std::io::Result<()> {
             .service(functions::test)
             .service(functions::jsonblob)
             .service(functions::delete_all)
+            .service(functions::delete_single)
             .service(fs::Files::new("/json", json_path.clone()).show_files_listing())
             .service(fs::Files::new("/image", img_path.clone()).show_files_listing())
     })

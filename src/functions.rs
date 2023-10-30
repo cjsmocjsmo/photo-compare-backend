@@ -68,5 +68,13 @@ pub async fn delete_all(f: web::Path<String>) -> impl Responder {
     let filename = f.into_inner();
     std::fs::remove_file(&filename).unwrap();
 
-    HttpResponse::Ok().body("Deleted!")
+    HttpResponse::Ok().body("All Deleted!")
+}
+
+#[get("/delete_single/{filename}")]
+pub async fn delete_single(f: web::Path<String>) -> impl Responder {
+    let filename = f.into_inner();
+    std::fs::remove_file(&filename).unwrap();
+
+    HttpResponse::Ok().body("Single File Deleted!")
 }
