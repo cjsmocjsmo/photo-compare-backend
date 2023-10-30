@@ -43,7 +43,9 @@ pub async fn jsonblob() -> impl Responder {
     let dup_info = get_25_files();
     // let dup_info_decode: Vec<TransDupsEntry> = serde_json::from_str(dup_info).unwrap();
     for dup in dup_info.clone() {
-        println!("dup {:#?}", dup.duplicates);
+        for d in dup.duplicates.clone() {
+            println!("d {:#?}", d.httpdups);
+        }
     }
     // println!("dup_info {:#?}", dup_info.clone());
 
