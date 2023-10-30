@@ -87,7 +87,7 @@ fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
         }
         let frag7 = format!("</section><div class='completeBtn'>");
         fragment.push(frag7);
-        let frag8 = format!("<button>Complete</button></div></div>");
+        let frag8 = format!("<button class='completeBtn'>Complete</button></div></div>");
         fragment.push(frag8);
         let html = fragment.join("");
         println!("html {:#?}", html.clone());
