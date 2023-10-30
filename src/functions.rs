@@ -37,8 +37,6 @@ pub struct DupStruct {
 
 #[get("/jsonblob")]
 pub async fn jsonblob() -> impl Responder {
-    let json_path = env::var("COMPARE_JSON_PATH").unwrap();
-    let pagination = env::var("COMPARE_PAGINATION").unwrap();
 
     let dup_info = get_25_files();
     // for dup in dup_info.clone() {
@@ -63,7 +61,7 @@ fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
     let mut new_dups = Vec::new();
     for file in dupslist {
         let mut fragment = Vec::new();
-        let filename = file.clone().httpfilename;
+        // let filename = file.clone().httpfilename;
         let frag1 = format!("<div class='container'><h1>Original</h1>");
         fragment.push(frag1);
         let frag2 = format!("<section class='containerImg'>");
