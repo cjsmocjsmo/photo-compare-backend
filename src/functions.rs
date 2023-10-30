@@ -26,8 +26,13 @@ pub async fn test() -> impl Responder {
 pub struct TransDupsEntry {
     pub filename: String,
     pub httpfilename: String,
-    pub duplicates: Vec<String>,
-    pub httpduplicates: Vec<String>,
+    pub duplicates: Vec<DupStruct>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct DupStruct {
+    pub strdups: String,
+    pub httpdups: String,
 }
 
 #[get("/jsonblob")]
@@ -36,7 +41,11 @@ pub async fn jsonblob() -> impl Responder {
     let pagination = env::var("COMPARE_PAGINATION").unwrap();
 
     let dup_info = get_25_files();
-    println!("dup_info {:#?}", dup_info.clone());
+    // let dup_info_decode: Vec<TransDupsEntry> = serde_json::from_str(dup_info).unwrap();
+    for dup in dup_info.clone() {
+        println!("dup {:#?}", dup.duplicates);
+    }
+    // println!("dup_info {:#?}", dup_info.clone());
 
     // let gen_frag = generate_fragment(dup_info);
 
@@ -74,7 +83,7 @@ pub async fn jsonblob() -> impl Responder {
 //     "fuck".to_string()
 // }
 
-fn get_25_files() -> Vec<String> {
+fn get_25_files() -> Vec<TransDupsEntry> {
     let json_path = env::var("COMPARE_JSON_PATH").unwrap();
     let pagination = env::var("COMPARE_PAGINATION").unwrap();
 let int_pagination =  pagination.parse::<usize>().unwrap();
@@ -86,8 +95,8 @@ let int_pagination =  pagination.parse::<usize>().unwrap();
             let file_path = entry.path().to_str().unwrap().to_owned();
             // read the json file file_path and parse it into a ImgHashStruct
             let file_contents = std::fs::read_to_string(file_path).unwrap();
-            // let img_hash_struct = serde_json::from_str(&file).unwrap();
-            files.push(file_contents);
+            let img_hash_struct: TransDupsEntry = serde_json::from_str(&file_contents).unwrap();
+            files.push(img_hash_struct);
 
             if files.len() == int_pagination {
                 break;
