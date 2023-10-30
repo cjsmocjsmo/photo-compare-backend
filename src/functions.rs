@@ -41,11 +41,11 @@ pub async fn jsonblob() -> impl Responder {
     let pagination = env::var("COMPARE_PAGINATION").unwrap();
 
     let dup_info = get_25_files();
-    for dup in dup_info.clone() {
-        for d in dup.duplicates.clone() {
-            println!("d {:#?}", d.httpdups);
-        }
-    }
+    // for dup in dup_info.clone() {
+    //     for d in dup.duplicates.clone() {
+    //         println!("d {:#?}", d.httpdups);
+    //     }
+    // }
 
 
     let gen_frag = generate_fragment(dup_info);
@@ -60,6 +60,7 @@ pub async fn jsonblob() -> impl Responder {
 }
 
 fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
+    let mut new_dups = Vec::new();
     for file in dupslist {
         let mut fragment = Vec::new();
         let filename = file.clone().httpfilename;
@@ -81,14 +82,21 @@ fn generate_fragment(dupslist: Vec<TransDupsEntry>) -> String {
             );
             fragment.push(frag5);
             let frag6 = format!(
-                "<div class='dupCardText'><p>{}</p></div></div>",
+                "<button on:click={}>delete</button></div>",
                 dup.clone().strdups
             );
             fragment.push(frag6);
         }
+        let frag7 = format!("</section><div class='completeBtn'>");
+        fragment.push(frag7);
+        let frag8 = format!("<button>Complete</button></div></div>");
+        fragment.push(frag8);
+        let html = fragment.join("");
+        println!("html {:#?}", html.clone());
+        new_dups.push(html);
     }
 
-    "fuck".to_string()
+    new_dups.join("")
 }
 
 fn get_25_files() -> Vec<TransDupsEntry> {
