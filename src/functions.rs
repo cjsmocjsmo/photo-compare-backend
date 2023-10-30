@@ -46,11 +46,11 @@ pub async fn jsonblob() -> impl Responder {
     // }
 
 
-    let gen_frag = generate_fragment(dup_info);
+    // let gen_frag = generate_fragment(dup_info);
 
-    println!("gen_frag {:#?}", gen_frag.clone());
+    // println!("gen_frag {:#?}", gen_frag.clone());
 
-    let json = serde_json::to_string(&gen_frag).unwrap();
+    let json = serde_json::to_string(&dup_info).unwrap();
 
     // println!("Found {} files", json.len());
 
