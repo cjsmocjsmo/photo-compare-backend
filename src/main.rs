@@ -23,6 +23,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(cors)
             .service(functions::test)
             .service(functions::jsonblob)
+            .service(functions::completed)
             .service(functions::delete_all)
             .service(functions::delete_single)
             .service(fs::Files::new("/json", json_path.clone()).show_files_listing())

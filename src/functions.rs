@@ -63,6 +63,14 @@ fn get_25_files() -> Vec<TransDupsEntry> {
     files
 }
 
+#[get("/completed/{filename}")]
+pub async fn completed(f: web::Path<String>) -> impl Responder {
+    let filename = f.into_inner();
+    std::fs::remove_file(&filename).unwrap();
+
+    HttpResponse::Ok().body("Single File Deleted!")
+}
+
 #[get("/delete_all/{filename}")]
 pub async fn delete_all(f: web::Path<String>) -> impl Responder {
     let filename = f.into_inner();
