@@ -66,7 +66,13 @@ fn get_25_files() -> Vec<TransDupsEntry> {
 #[get("/delete_all/{filename}")]
 pub async fn delete_all(f: web::Path<String>) -> impl Responder {
     let filename = f.into_inner();
-    std::fs::remove_file(&filename).unwrap();
+    //open filename read it's contents and delete all files
+    let file_contents = std::fs::read_to_string(&filename).unwrap();
+    let img_hash_struct: TransDupsEntry = serde_json::from_str(&file_contents).unwrap();
+    for dup in img_hash_struct.duplicates {
+        std::fs::remove_file(dup.strdups).unwrap();
+    }
+    std::fs::remove_file(filename).unwrap();
 
     HttpResponse::Ok().body("All Deleted!")
 }
