@@ -65,7 +65,9 @@ fn get_25_files() -> Vec<TransDupsEntry> {
 
 #[get("/completed/{filename}")]
 pub async fn completed(f: web::Path<String>) -> impl Responder {
-    let filename = f.into_inner();
+    let prefix = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/ToRemove/";
+    let fname = f.into_inner();
+    let filename = format!("{}{}", prefix, fname);
     std::fs::remove_file(&filename).unwrap();
 
     HttpResponse::Ok().body("Single File Deleted!")
@@ -73,12 +75,16 @@ pub async fn completed(f: web::Path<String>) -> impl Responder {
 
 #[get("/delete_all/{filename}")]
 pub async fn delete_all(f: web::Path<String>) -> impl Responder {
-    let filename = f.into_inner();
+    let prefix = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/ToRemove/";
+    let fname = f.into_inner();
+    let filename = format!("{}{}", prefix, fname);
     //open filename read it's contents and delete all files
     let file_contents = std::fs::read_to_string(&filename).unwrap();
     let img_hash_struct: TransDupsEntry = serde_json::from_str(&file_contents).unwrap();
     for dup in img_hash_struct.duplicates {
-        std::fs::remove_file(dup.strdups).unwrap();
+        let prefix2 = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/Converted/";
+        let file_to_delete = format!("{}{}", prefix2, dup.strdups);
+        std::fs::remove_file(file_to_delete).unwrap();
     }
     std::fs::remove_file(filename).unwrap();
 
@@ -87,7 +93,9 @@ pub async fn delete_all(f: web::Path<String>) -> impl Responder {
 
 #[get("/delete_single/{filename}")]
 pub async fn delete_single(f: web::Path<String>) -> impl Responder {
-    let filename = f.into_inner();
+    let prefix = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/Converted/";
+    let fname = f.into_inner();
+    let filename = format!("{}{}", prefix, fname);
     std::fs::remove_file(&filename).unwrap();
 
     HttpResponse::Ok().body("Single File Deleted!")
