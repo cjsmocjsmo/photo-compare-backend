@@ -78,15 +78,17 @@ pub async fn delete_all(f: web::Path<String>) -> impl Responder {
     let prefix = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/ToRemove/";
     let fname = f.into_inner();
     let filename = format!("{}{}", prefix, fname);
+    println!("Filename: {}", filename);
     //open filename read it's contents and delete all files
     let file_contents = std::fs::read_to_string(&filename).unwrap();
     let img_hash_struct: TransDupsEntry = serde_json::from_str(&file_contents).unwrap();
     for dup in img_hash_struct.duplicates {
         let prefix2 = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/Converted/";
         let file_to_delete = format!("{}{}", prefix2, dup.strdups);
-        std::fs::remove_file(file_to_delete).unwrap();
+        println!("File to delete: {}", file_to_delete);
+        // std::fs::remove_file(file_to_delete).unwrap();
     }
-    std::fs::remove_file(filename).unwrap();
+    // std::fs::remove_file(filename).unwrap();
 
     HttpResponse::Ok().body("All Deleted!")
 }
