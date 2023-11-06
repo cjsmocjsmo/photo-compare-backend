@@ -89,9 +89,9 @@ pub async fn delete_all(f: web::Path<String>) -> impl Responder {
         let prefix2 = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/Converted/";
         let file_to_delete = format!("{}{}", prefix2, dup.strdups);
         println!("File to delete: \n\t{}", file_to_delete);
-        // std::fs::remove_file(file_to_delete).unwrap();
+        std::fs::remove_file(file_to_delete).unwrap();
     }
-    // std::fs::remove_file(filename).unwrap();
+    std::fs::remove_file(filename).unwrap();
 
     HttpResponse::Ok().body("All Deleted!")
 }
