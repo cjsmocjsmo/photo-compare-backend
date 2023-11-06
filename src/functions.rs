@@ -31,6 +31,7 @@ pub async fn jsonblob() -> impl Responder {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TransDupsEntry {
+    pub jsonfilename: String,
     pub filename: String,
     pub httpfilename: String,
     pub duplicates: Vec<DupStruct>,
@@ -42,8 +43,10 @@ pub struct DupStruct {
 }
 fn get_25_files() -> Vec<TransDupsEntry> {
     let json_path = env::var("COMPARE_JSON_PATH").unwrap();
-    let pagination = env::var("COMPARE_PAGINATION").unwrap();
-    let int_pagination = pagination.parse::<usize>().unwrap();
+    let pagination = env::var("COMPARE_PAGINATION")
+        .unwrap()
+        .parse::<usize>()
+        .unwrap();
     let mut files = Vec::new();
 
     for entry in WalkDir::new(json_path) {
@@ -54,7 +57,7 @@ fn get_25_files() -> Vec<TransDupsEntry> {
             let img_hash_struct: TransDupsEntry = serde_json::from_str(&file_contents).unwrap();
             files.push(img_hash_struct);
 
-            if files.len() == int_pagination {
+            if files.len() == pagination {
                 break;
             }
         }
@@ -78,14 +81,14 @@ pub async fn delete_all(f: web::Path<String>) -> impl Responder {
     let prefix = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/ToRemove/";
     let fname = f.into_inner();
     let filename = format!("{}{}", prefix, fname);
-    println!("Filename: {}", filename);
+    println!("Filename: \n\t{}", filename);
     //open filename read it's contents and delete all files
     let file_contents = std::fs::read_to_string(&filename).unwrap();
     let img_hash_struct: TransDupsEntry = serde_json::from_str(&file_contents).unwrap();
     for dup in img_hash_struct.duplicates {
         let prefix2 = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/Converted/";
         let file_to_delete = format!("{}{}", prefix2, dup.strdups);
-        println!("File to delete: {}", file_to_delete);
+        println!("File to delete: \n\t{}", file_to_delete);
         // std::fs::remove_file(file_to_delete).unwrap();
     }
     // std::fs::remove_file(filename).unwrap();
